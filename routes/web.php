@@ -15,8 +15,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('index')->middleware('auth');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+
+/*
+|------------------------------------------------------------------------
+| Backend
+|------------------------------------------------------------------------
+*/
+
+Route::prefix('admin')->namespace('Back')->group(function()
+{
+	Route::middleware('redac')->group(function () 
+	{
+		Route::name('admin')->get('/', 'AdminController@index');
+	});
+});

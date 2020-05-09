@@ -2,13 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Events\ModelCreated;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, IngoingTrait;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents =[
+        'created' => ModelCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

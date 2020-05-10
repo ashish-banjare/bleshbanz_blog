@@ -27,10 +27,19 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 |------------------------------------------------------------------------
 */
 
-Route::prefix('admin')->namespace('Back')->group(function()
-{
-	Route::middleware('redac')->group(function () 
-	{
+Route::prefix('admin')->namespace('Back')->group(function(){
+
+	Route::middleware('redac')->group(function () {
+		
 		Route::name('admin')->get('/', 'AdminController@index');
+
 	});
+
+	Route::middleware('redac')->group(function () {
+
+		// Users
+		Route::resource('users', 'UserController', ['only'=>['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+
+	});
+
 });

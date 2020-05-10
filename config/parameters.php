@@ -3,7 +3,7 @@
 return [
 
     'users' => [
-        'order' => 'created_at',
+        'order' => 'id',
         'direction' => 'desc',
         'role' => 'all',
         'valid' => false,

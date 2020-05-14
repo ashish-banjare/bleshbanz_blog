@@ -14,6 +14,7 @@ return [
     'users' => [
         'index' => 'usersGestion',
         'edit' => 'userEdit',
+        'create' => 'userCreate',
     ],
     'contacts' => [
         'index' => 'contactsGestion',

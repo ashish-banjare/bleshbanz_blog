@@ -18,6 +18,7 @@ return [
         'dashboard' => 'Dashboard',
         'usersGestion' => 'Users Gestion',
         'userEdit' => 'User Edition',
+        'userCreate' => 'User Creation',
         'contactsGestion' => 'Contacts Gestion',
         'postsGestion' => 'Posts Gestion',
         'postEdit' => 'Post Edition',

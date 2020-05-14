@@ -156,7 +156,28 @@ desired effect
 	            ],
 	        ])
         @endadmin
-
+        <li><a href="{{ route('categories.index') }}"><i class="fa fa-list"></i> <span>@lang('Categories')</span></a></li>
+        @include('back.partials.treeview', [
+          'icon' => 'file-text',
+          'type' => 'post',
+          'items' => [
+            [
+              'route' => route('posts.index'),
+              'command' => 'list',
+              'color' => 'blue',
+            ],
+            [
+              'route' => route('posts.index', ['new' => 'on']),
+              'command' => 'new',
+              'color' => 'yellow',
+            ],
+            [
+              'route' => route('posts.create'),
+              'command' => 'create',
+              'color' => 'green',
+            ],
+          ],
+        ])
       </ul>
       <!-- /.sidebar-menu -->
     </section>

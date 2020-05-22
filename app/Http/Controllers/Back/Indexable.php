@@ -31,7 +31,7 @@ trait Indexable
 		// Get records and generate links for pagination
 		$records = $this->repository->getAll (config ("app.nbrPages.back.$this->table"), $parameters);
 		$links = $records->appends($parameters)->links('back.pagination');
-		echo "<pre>"; print_r($records);die;
+		
 		if( $request->ajax() ){
 			return response()->json([
 				'table' => view( "back.$this->table.table", [$this->table => $records] )->render(),

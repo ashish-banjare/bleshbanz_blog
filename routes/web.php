@@ -32,12 +32,18 @@ Route::prefix('admin')->namespace('Back')->group(function(){
 	Route::middleware('redac')->group(function () {
 		
 		Route::name('admin')->get('/', 'AdminController@index');
+		// category
+		Route::resource('categories', 'CategoryController', ['except'=>'show']);
+		// Posts
+		Route::resource('posts', 'PostController');
 
 	});
 
-	Route::middleware('redac')->group(function () {
+	Route::middleware('admin')->group(function () {
 
 		// Users
+		Route::name('users.seen')->put('users/seen/{user}', 'UserController@updateSeen');
+		Route::name('users.valid')->put('users/valid/{user}', 'UserController@updateValid');
 		Route::resource('users', 'UserController', ['only'=>['index', 'create', 'store', 'edit', 'update', 'destroy']]);
 
 	});

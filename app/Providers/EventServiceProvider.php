@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ModelCreated' => [
             'App\Listeners\ModelCreated',
         ],
+        'App\Events\PostUpdated' => [
+            'App\Events\PostUpdated',
+        ],
     ];
 
     /**

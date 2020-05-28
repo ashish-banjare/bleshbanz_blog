@@ -2,9 +2,12 @@
 /public/hot
 /public/storage
 /public/adminlte
+/public/css/fonts
+/public/css/font-awesome
+/public/css/img
+/public/images
 /storage/*.key
 /vendor
-.env
 .env.backup
 .phpunit.result.cache
 composer.lock

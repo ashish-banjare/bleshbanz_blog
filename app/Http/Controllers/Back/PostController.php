@@ -91,13 +91,43 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified post from storage.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return response()->json();
+    }
+
+    /**
+     * Update "new" field for post.
+     *
+     * @param  \App\Models\Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function updateSeen(Post $post)
+    {
+        $post->ingoing->delete ();
+
+        return response ()->json ();
+    }
+    
+    /**
+     * Update "active" field for post.
+     *
+     * @param  \App\Models\Post $post
+     * @param  bool $status
+     * @return \Illuminate\Http\Response
+     */
+    public function updateActive(Post $post, $status = false)
+    {
+        $post->active = $status;
+        $post->save();
+
+        return response ()->json ();
     }
 }

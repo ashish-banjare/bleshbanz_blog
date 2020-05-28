@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use App\Http\ViewComposers\MenuComposer;
 use App\Http\ViewComposers\HeaderComposer;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         setLocale(LC_TIME, config('app.locale'));
+
+        view()->composer('front/layout',MenuComposer::class);
+        
+        view()->composer('front/sidebar',MenuComposer::class);
 
         view()->composer('back/layout',HeaderComposer::class);
 

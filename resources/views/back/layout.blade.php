@@ -178,6 +178,9 @@ desired effect
             ],
           ],
         ])
+        @admin
+          <li><a href="{{ route('settings.edit') }}"><i class="fa fa-cog"></i> <span>@lang('Settings')</span></a></li>
+        @endadmin
       </ul>
       <!-- /.sidebar-menu -->
     </section>

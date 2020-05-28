@@ -13,13 +13,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('index')->middleware('auth');
+/*
+|--------------------------------------------------------------------------
+| Frontend
+|--------------------------------------------------------------------------|
+*/
 
+// Home
+Route::name('home')->get('/', 'Front\PostController@index');
+Route::get('/home', 'Front\PostController@index');
+
+// Contact
+Route::resource('contacts', 'Front\ContactController', ['only' => ['create', 'store']]);
+
+// Posts and comments
+Route::prefix('posts')->namespace('Front')->group(function () {
+    Route::name('posts.display')->get('{slug}', 'PostController@show');
+    Route::name('posts.tag')->get('tag/{tag}', 'PostController@tag');
+    Route::name('posts.search')->get('', 'PostController@search');
+    Route::name('posts.comments.store')->post('{post}/comments', 'CommentController@store');
+    Route::name('posts.comments.comments.store')->post('{post}/comments/{comment}/comments', 'CommentController@store');
+    Route::name('posts.comments')->get('{post}/comments/{page}', 'CommentController@comments');
+});
+
+Route::resource('comments', 'Front\CommentController', [
+    'only' => ['update', 'destroy'],
+    'names' => ['destroy' => 'front.comments.destroy']
+]);
+
+Route::name('category')->get('category/{category}', 'Front\PostController@category');
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 /*
 |------------------------------------------------------------------------
@@ -35,6 +58,8 @@ Route::prefix('admin')->namespace('Back')->group(function(){
 		// category
 		Route::resource('categories', 'CategoryController', ['except'=>'show']);
 		// Posts
+		Route::name('posts.seen')->put('posts/seen/{post}', 'PostController@updateSeen')->middleware('can:manage,post');
+		Route::name('posts.active')->put('posts/active/{post}/{status?}', 'PostController@updateActive')->middleware('can:manage,post');
 		Route::resource('posts', 'PostController');
 
 	});
@@ -45,6 +70,10 @@ Route::prefix('admin')->namespace('Back')->group(function(){
 		Route::name('users.seen')->put('users/seen/{user}', 'UserController@updateSeen');
 		Route::name('users.valid')->put('users/valid/{user}', 'UserController@updateValid');
 		Route::resource('users', 'UserController', ['only'=>['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+
+		// Settings
+		Route::name('settings.edit')->get('settings', 'AdminController@settingsEdit');
+		Route::name('settings.update')->put('settings', 'AdminController@settingsUpdate');
 
 	});
 

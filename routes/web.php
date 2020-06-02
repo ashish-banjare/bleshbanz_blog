@@ -75,6 +75,18 @@ Route::prefix('admin')->namespace('Back')->group(function(){
 		Route::name('settings.edit')->get('settings', 'AdminController@settingsEdit');
 		Route::name('settings.update')->put('settings', 'AdminController@settingsUpdate');
 
+		// Contacts
+        Route::name('contacts.seen')->put('contacts/seen/{contact}', 'ContactController@updateSeen');
+        Route::resource('contacts', 'ContactController', ['only' => [
+            'index', 'destroy'
+        ]]);
+
+        // Comments
+        Route::name('comments.seen')->put('comments/seen/{comment}', 'CommentController@updateSeen');
+        Route::resource('comments', 'CommentController', ['only' => [
+            'index', 'destroy'
+        ]]);
+
 	});
 
 });

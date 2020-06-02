@@ -155,6 +155,40 @@ desired effect
 	              ],
 	            ],
 	        ])
+
+          @include('back.partials.treeview', [
+            'icon' => 'envelope',
+            'type' => 'contact',
+            'items' => [
+              [
+                'route' => route('contacts.index'),
+                'command' => 'list',
+                'color' => 'blue',
+              ],
+              [
+                'route' => route('contacts.index', ['new' => 'on']),
+                'command' => 'new',
+                'color' => 'yellow',
+              ],
+            ],
+          ])
+
+          @include('back.partials.treeview', [
+            'icon' => 'comment',
+            'type' => 'comment',
+            'items' => [
+              [
+                'route' => route('comments.index'),
+                'command' => 'list',
+                'color' => 'blue',
+              ],
+              [
+                'route' => route('comments.index', ['new' => 'on']),
+                'command' => 'new',
+                'color' => 'yellow',
+              ],
+            ],
+          ])
         @endadmin
         <li><a href="{{ route('categories.index') }}"><i class="fa fa-list"></i> <span>@lang('Categories')</span></a></li>
         @include('back.partials.treeview', [

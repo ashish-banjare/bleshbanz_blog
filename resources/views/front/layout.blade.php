@@ -99,7 +99,7 @@
 								</li>
 							@endredac
 							<li>
-								<a id="logout" href="{{ route('logout') }}">@lang('Logout')</a>
+								<a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"> Logout </a>
 								<form id="logout-form" action="{{ route('logout') }}" method="POST" class="hide">
 									{{ csrf_field() }}
 								</form>

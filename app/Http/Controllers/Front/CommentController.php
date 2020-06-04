@@ -6,7 +6,7 @@ use App\ {
     Http\Controllers\Controller,
     Http\Requests\CommentRequest,
     Repositories\CommentRepository,
-    // Notifications\Commented,
+    Notifications\Commented,
     Models\Post,
     Models\Comment
 };
@@ -42,7 +42,7 @@ class CommentController extends Controller
             'parent_id' => $comment_id,
         ]);
 
-        // $post->user->notify(new Commented($post, $request->user()->id));
+        $post->user->notify(new Commented($post, $request->user()->id));
 
         if (!$request->user()->valid) {
             $request->session()->flash('warning', __('Thanks for your comment. It will appear when an administrator has validated it.<br>Once you are validated your other comments immediately appear.'));

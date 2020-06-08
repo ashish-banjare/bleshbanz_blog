@@ -177,7 +177,7 @@ return [
         /*
          * Package service provider
          */
-        Baum\Providers\BaumServiceProvider::class,
+        // Baum\Providers\BaumServiceProvider::class,
 
     ],
 

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderShipped;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,30 +21,39 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------|
 */
 
-// Home
-Route::name('home')->get('/', 'Front\PostController@index');
-Route::get('/home', 'Front\PostController@index');
+Route::group(['middleware' => 'verified'], function(){
 
-// Contact
-Route::resource('contacts', 'Front\ContactController', ['only' => ['create', 'store']]);
+	// Home
+	Route::name('home')->get('/', 'Front\PostController@index');
+	Route::get('/home', 'Front\PostController@index');
 
-// Posts and comments
-Route::prefix('posts')->namespace('Front')->group(function () {
-    Route::name('posts.display')->get('{slug}', 'PostController@show');
-    Route::name('posts.tag')->get('tag/{tag}', 'PostController@tag');
-    Route::name('posts.search')->get('', 'PostController@search');
-    Route::name('posts.comments.store')->post('{post}/comments', 'CommentController@store');
-    Route::name('posts.comments.comments.store')->post('{post}/comments/{comment}/comments', 'CommentController@store');
-    Route::name('posts.comments')->get('{post}/comments/{page}', 'CommentController@comments');
+	Route::get('/send_mail', function(){
+		Mail::to('aashish.van3591@gmail.com')->send(new OrderShipped());
+	});
+	// Contact
+	Route::resource('contacts', 'Front\ContactController', ['only' => ['create', 'store']]);
+
+	// Posts and comments
+	Route::prefix('posts')->namespace('Front')->group(function () {
+	    Route::name('posts.display')->get('{slug}', 'PostController@show');
+	    Route::name('posts.tag')->get('tag/{tag}', 'PostController@tag');
+	    Route::name('posts.search')->get('', 'PostController@search');
+	    Route::name('posts.comments.store')->post('{post}/comments', 'CommentController@store');
+	    Route::name('posts.comments.comments.store')->post('{post}/comments/{comment}/comments', 'CommentController@store');
+	    Route::name('posts.comments')->get('{post}/comments/{page}', 'CommentController@comments');
+	});
+
+	Route::resource('comments', 'Front\CommentController', [
+	    'only' => ['update', 'destroy'],
+	    'names' => ['destroy' => 'front.comments.destroy']
+	]);
+
+	Route::name('category')->get('category/{category}', 'Front\PostController@category');
+
 });
 
-Route::resource('comments', 'Front\CommentController', [
-    'only' => ['update', 'destroy'],
-    'names' => ['destroy' => 'front.comments.destroy']
-]);
-
-Route::name('category')->get('category/{category}', 'Front\PostController@category');
 Auth::routes();
+Auth::routes(['verify' => true]);
 
 /*
 |------------------------------------------------------------------------

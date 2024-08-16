@@ -21,7 +21,7 @@ use App\Mail\OrderShipped;
 |--------------------------------------------------------------------------|
 */
 
-Route::group(['middleware' => 'verified'], function(){
+// Route::group(['middleware' => 'verified'], function(){
 
 	// Home
 	Route::name('home')->get('/', 'Front\PostController@index');
@@ -50,7 +50,7 @@ Route::group(['middleware' => 'verified'], function(){
 
 	Route::name('category')->get('category/{category}', 'Front\PostController@category');
 
-});
+// });
 
 Auth::routes();
 Auth::routes(['verify' => true]);

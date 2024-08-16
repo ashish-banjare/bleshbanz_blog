@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      args:
+        user: sammy
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: bleshbanz_blog
+    container_name: bleshbanz_blog-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - mysql_shared_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: bleshbanz_blog-nginx
+    restart: unless-stopped
+    ports:
+      - "8088:80"  # Make sure to use a different port than the other Nginx service
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - mysql_shared_network
+
+networks:
+  mysql_shared_network:
+    external: true
